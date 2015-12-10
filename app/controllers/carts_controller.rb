@@ -3,6 +3,8 @@ class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
+  # FIXME_SG: remove useless comments. you should add more meaningfull comments!
+
   # GET /carts
   # GET /carts.json
 
@@ -57,7 +59,9 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
+    # FIXME_SG: What if cart can not be destroyed?
     @cart.destroy if @cart.id == session[:cart_id]
+    # FIXME_SG: Use session.delete
     session[:cart_id] = nil
     respond_to do |format|
       format.html { redirect_to store_url }
@@ -79,6 +83,8 @@ class CartsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    # FIXME_SG: use params.require
+    # FIXME_SG: rename this method
     def cart_params
       params[:cart]
     end
