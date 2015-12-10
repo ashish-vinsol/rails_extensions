@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -71,6 +71,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def orders
+  end
+
+  def line_items
+    @page_size = (Float(User.find(session[:user_id]).line_items.size)/Float(5)).ceil
+    if @page_size > 1
+      (1..@page_size).each do
+        @line_items = User.find(session[:user_id]).line_items.offset(params[:page].to_i*5-5).limit(5)
+      end
+    else
+      @line_items = User.find(session[:user_id]).line_items
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -79,6 +93,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation)
+      debugger
+      params.require(:user).permit(:name, :password, :password_confirmation, :email)
     end
 end

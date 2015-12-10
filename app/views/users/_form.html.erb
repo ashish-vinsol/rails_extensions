@@ -25,6 +25,10 @@ prohibited this user from being saved:</h2>
 <%= f.label :password_confirmation, 'Confirm:' %>
 <%= f.password_field :password_confirmation, size: 40 %>
 </div>
+<div class="field">
+<%= f.label :email %>
+<%= f.text_field :email %>
+</div>
 <div class="actions">
 <%= f.submit %>
 </div>

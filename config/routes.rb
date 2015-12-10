@@ -9,6 +9,10 @@ Depot::Application.routes.draw do
 
   get "sessions/create"
   get "sessions/destroy"
+  get "users/orders"
+  get "users/line_items"
+  get "users/line_items/:page" => "users#line_items"
+
 
   resources :users
 

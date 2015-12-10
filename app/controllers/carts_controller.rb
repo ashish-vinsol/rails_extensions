@@ -20,7 +20,7 @@ class CartsController < ApplicationController
     @cart = Cart.new
   end
 
-  # GET /carts/1/edit
+  # GET /carts/1/edit+7
   def edit
   end
 
