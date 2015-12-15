@@ -12,6 +12,11 @@ class Category < ActiveRecord::Base
   private
 
   def ensure_not_containing_products
+    #FIX: we can use this logic too
+    # if products_count > 0
+    #   errors.add(:base, 'Products present')
+    #   false
+    # end
     if products.empty? && subcategories.each { |subcategory| subcategory.products.empty? }
       subcategories.destroy_all
     else

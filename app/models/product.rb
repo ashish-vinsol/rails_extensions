@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   #FIXME_SG: spacing
-  #FIXME_SG: tell me the query 'product.line_item' will fire.
-  has_many :line_items ,dependent: :restrict_with_error
+  #FIXME_SG: tell me the query 'product.line_items' will fire.
+  has_many :line_items, dependent: :restrict_with_error
   has_many :carts, through: :line_items
   belongs_to :category
   #FIXME_SG: remove if not using
@@ -42,6 +42,7 @@ class Product < ActiveRecord::Base
     end
   end
 
+  #FIX: move to public. also see how to define private class methods
   def self.latest
     Product.order(:updated_at).last
   end
@@ -60,13 +61,14 @@ class Product < ActiveRecord::Base
     self.discount_price.blank? ? (self.discount_price = self.price) : nil
   end
 
+  #FIX: BUG: this will not update count in previous category and subcategories.
   def update_products_count
     #FIXME_SG: spacing
     #FIXME_SG: why are we doing Category.find(self.category_id)
     # => first we do not have to write self
     # => i think category will also return the same thing confirm.
+    #FIX: rename column to #products_count
     Category.find(self.category_id).update_column(count:  Category.find(self.category_id).products.size)
   end
 
 end
-

@@ -7,4 +7,3 @@ class CategoryValidator < ActiveModel::Validator
     end
   end
 end
-
