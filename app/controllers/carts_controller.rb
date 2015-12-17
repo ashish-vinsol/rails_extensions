@@ -3,8 +3,6 @@ class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
-  # FIXME_SG: remove useless comments. you should add more meaningfull comments!
-
   def index
     @carts = Cart.all
   end
@@ -47,9 +45,9 @@ class CartsController < ApplicationController
 
   def destroy
     # FIXME_SG: What if cart can not be destroyed?
+    # FIXME_SG: try again
     if @cart.id == session[:cart_id]
       @cart.destroy
-    # FIXME_SG: Use session.delete
     else
       flash[:notice] = "Can't be deleted"
     end
@@ -62,7 +60,10 @@ class CartsController < ApplicationController
 
   private
 
+    # FIXME_SG: either always use indentation for private method or never be consistent!
+
     def invalid_cart
+      # FIXME_SG: spacing
       logger.error "Attempt to access invalid cart #{params[:id]}"
       redirect_to store_url, notice: 'Invalid cart'
     end
@@ -71,10 +72,10 @@ class CartsController < ApplicationController
       @cart = Cart.find(params[:id])
     end
 
-    def cart_attributes
-      params.require(:cart)
-    # Never trust parameters from the scary internet, only allow the white list through.
-    # FIXME_SG: use params.require
     # FIXME_SG: rename this method
+    def cart_attributes
+      # FIXME_SG: use params.require.permit()
+      params.require(:cart)
+      # Never trust parameters from the scary internet, only allow the white list through.
     end
 end
