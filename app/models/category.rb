@@ -13,6 +13,11 @@ class Category < ActiveRecord::Base
 
   def ensure_not_containing_products
     if count > 0
+    #FIX: we can use this logic too
+    # if products_count > 0
+    #   errors.add(:base, 'Products present')
+    #   false
+    # end
       errors.add(:base, 'Products present')
       false
     end
