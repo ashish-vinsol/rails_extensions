@@ -12,7 +12,9 @@ class Cart < ActiveRecord::Base
     current_item ? (current_item.quantity += 1) : (current_item = line_items.build(product_id: product_id))
     current_item
   end
+
   def total_price
+    # FIXME: refactor
     line_items.inject(0) { |a, b| a += b.total_price }
   end
 

@@ -12,6 +12,7 @@ class Order < ActiveRecord::Base
   scope :by_date, ->(from = Date.today.midnight, to = Time.now) { where("? < created_at < ?", from, to)}
 
   def add_line_items_from_cart(cart)
+    #FIXME_SG check this method.
     cart.line_items.each do |item|
       item.cart_id = nil
       #FIX: don't we need item.save! here?

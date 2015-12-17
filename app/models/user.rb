@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   }
   validates :email, uniqueness: true
 
+  #FIXME_SG: naming
   before_destroy :ensure_an_admin_remains
   before_update :prevent_admin_update
   #FIX: this can also be moved to before_destroy
@@ -21,12 +22,14 @@ class User < ActiveRecord::Base
 
   private
     def ensure_an_admin_remains
+      #FIXME_SG: ensure one admin remains
       if self.role == 'admin'
         raise "Can't delete admin"
       end
     end
 
     def prevent_admin_update
+      #FIXME_SG: refactor in one line
       if self.role == 'admin'
       #FIX: define a scope for :admin, and check count
       #     Also study the differences b/w scopes and class methods
