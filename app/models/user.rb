@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :orders
   has_many :line_items, through: :orders
+  has_one :address
+
   validates :name, presence: true, uniqueness: true
   validates :email, format: {
     with: /\A([a-z0-9_\.-]{3,})@([a-z]{5,})\.([a-z \.]{2,5})\Z/,
@@ -10,32 +12,25 @@ class User < ActiveRecord::Base
   }
   validates :email, uniqueness: true
 
-  after_destroy :ensure_an_admin_remains
-  before_destroy :check_email
-  before_update :check_if_admin
+  before_destroy :ensure_an_admin_remains
+  before_update :prevent_admin_update
   after_create :send_mail
 
   private
     def ensure_an_admin_remains
-      if User.count.zero?
-        raise "Can't delete last user"
+      if self.role == 'admin'
+        raise "Can't delete admin"
       end
     end
 
-    def check_email
-      if self.email == 'admin@depot.com'
-        raise "Can't delete user"
-      end
-    end
-
-    def check_if_admin
-      if self.email == 'admin@depot.com'
+    def prevent_admin_update
+      if self.role == 'admin'
         false
       end
     end
 
     def send_mail
-      UserNotifier.created.deliver
+      UserNotifier.create_notification.deliver
     end
 
 end

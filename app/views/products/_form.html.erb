@@ -23,6 +23,10 @@
     <%= f.text_field :image_url %>
   </div>
   <div class="field">
+   <%= f.label :picture%><br>
+    <%= f.file_field :picture, multiple: true %>
+  </div>
+  <div class="field">
     <%= f.label :price %><br>
     <%= f.text_field :price %>
   </div>
@@ -38,6 +42,10 @@
     <%= f.label :permalink %><br>
     <%= f.text_field :permalink %>
   </div>
+  <div class="field">
+  <%= f.select(:category_id, Category.all.collect {|category| [ category.name, category.id ] }, { :prompt => 'Select One' }) %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

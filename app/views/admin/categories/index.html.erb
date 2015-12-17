@@ -1,0 +1,29 @@
+<h1>Welcome Admin</h1>
+It's <%= Time.now %>
+
+<h1>Listing Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Parent Categories</th>
+      <th>Products Count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= link_to category.name, categorise_products_path(category)  %></td>
+        <% if category.parent_category_id != nil %>
+          <td><%= Category.find(category.parent_category_id).name %></td>
+        <% else %>
+          <td><%= 'NA' %></td>
+        <% end %>
+        <td><%= category.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

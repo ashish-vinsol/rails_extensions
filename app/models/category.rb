@@ -7,17 +7,16 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: { allow_blank: true, scope: :parent_category_id }
-  validates_with CategoryValidator
+  validates_with CategoryCreatorValidator
 
   private
 
   def ensure_not_containing_products
-    if products.empty? && subcategories.each { |subcategory| subcategory.products.empty? }
-      subcategories.destroy_all
-    else
+    if count > 0
       errors.add(:base, 'Products present')
-      return false
+      false
     end
   end
 
 end
+

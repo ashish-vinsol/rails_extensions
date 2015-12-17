@@ -1,7 +1,7 @@
 class UserNotifier < ApplicationMailer
   default from: 'Ashish <ashish@vinsol.com>'
 
-  def created
+  def create_notification
     mail to: 'ashish@vinsol.com', subject: 'User Created'
   end
 

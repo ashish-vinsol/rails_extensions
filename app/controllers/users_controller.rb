@@ -72,6 +72,7 @@
   end
 
   def orders
+    render :myorders
   end
 
   def line_items
@@ -93,7 +94,6 @@
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      debugger
-      params.require(:user).permit(:name, :password, :password_confirmation, :email)
+      params.require(:user).permit(:name, :password, :password_confirmation, :email, address_attributes: [:country,:state,:city,:pincode])
     end
 end

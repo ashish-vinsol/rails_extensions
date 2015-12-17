@@ -9,7 +9,15 @@ class OrderNotifier < ApplicationMailer
   #
   def received(order)
     @order = order
-    mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
+    if @order.images.size == 1
+      attachments.inline[@order.images.first.name] = File.read(Rails.root.join('assets/images/'+ @order.images.first.name))
+    end
+    if @order.images.size > 1
+      @order.images.each do |image|
+        mail.attachments['filename.jpg'] = File.read(Rails.root.join('assets/images/'+ image.name))
+        mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
+      end
+    end
   end
 
 
