@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
+  include CurrentCart
   # FIXME_SG: repeat?
   skip_before_action :authorize, only: [:new, :create]
   # FIXME_SG: move include statement from between before_actions
-  include CurrentCart
   skip_before_action :authorize, only: [:new, :create]
   before_action :set_cart, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]

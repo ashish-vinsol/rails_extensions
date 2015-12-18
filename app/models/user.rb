@@ -21,13 +21,13 @@ class User < ActiveRecord::Base
 
   private
     def ensure_an_admin_remains
-      if self.role == 'admin'
-        raise "Can't delete admin"
+      if role == 'admin' && User.where(role: :admin).size == 1
+        raise 'cant delete admin'
       end
     end
 
     def prevent_admin_update
-      if self.role == 'admin'
+      if role == 'admin'
       #FIX: define a scope for :admin, and check count
       #     Also study the differences b/w scopes and class methods
     #FIX: rename to prevent_admin_update

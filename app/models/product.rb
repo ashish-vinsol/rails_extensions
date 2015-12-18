@@ -39,6 +39,9 @@ class Product < ActiveRecord::Base
   def self.latest
     Product.order(:updated_at).last
   end
+  def self.products_json_content
+    Product.joins(:category).pluck('title', 'name')
+  end
 
   private
 
@@ -63,13 +66,11 @@ class Product < ActiveRecord::Base
     category.update_columns(count: 1 + category.subcategories.pluck('count').sum)
   end
 
-  def self.products_json_content
-    Product.joins(:category).pluck('title','name')
+
     #FIXME_SG: spacing
     #FIXME_SG: why are we doing Category.find(self.category_id)
     # => first we do not have to write self
     # => i think category will also return the same thing confirm.
     #FIX: rename column to #products_count
-  end
 
 end
