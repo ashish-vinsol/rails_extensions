@@ -10,7 +10,7 @@ class Category < ActiveRecord::Base
   validates_with CategoryCreatorValidator
 
   private
-
+  #FIXME_SG: Rename
   def ensure_not_containing_products
     if count > 0
     #FIX: we can use this logic too
