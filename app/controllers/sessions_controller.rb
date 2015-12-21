@@ -5,7 +5,10 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(name: params[:name])
-    if user and user.authenticate(params[:password])
+    if user and user.authenticate(params[:password]) and user.role == "admin"
+      session[:user_id] = user.id
+      redirect_to admin_reports_url
+    elsif user and user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to admin_url
     else

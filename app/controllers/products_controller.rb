@@ -1,10 +1,16 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  # before_action :check_id, only: [:categorise_products]
   # GET /products
   # GET /products.json
   def index
     @products = Product.all
+    respond_to do |format|
+      format.html
+      format.json { render json: Product.products_json_content }
+    end
+
+
   end
 
   # GET /products/1
@@ -39,6 +45,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+        Image.upload(params[:product][:picture], @product.id )
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -72,14 +79,25 @@ class ProductsController < ApplicationController
     end
   end
 
+  def categorise_products
+    @categorise_products = Product.where(category_id: params[:id].to_i)
+    @subcategories = Category.find(params[:id]).subcategories
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end
 
+    def check_id
+      if params[:id].to_i == 0
+        redirect_to store_url
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:title, :description, :image_url, :price)
+      params.require(:product).permit(:title, :description, :image_url, :price, :permalink, :discount_price, :category_id)
     end
 end

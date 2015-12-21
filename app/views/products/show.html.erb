@@ -1,4 +1,10 @@
-<p id="notice"><%= notice %></p>
+ <div id="slide">
+   <p>
+    <%  @product.images.first(3).each do |image| %>
+      <%= image_tag image.name %>
+    <% end %>
+  </p>
+</div>
 
 <p>
   <strong>Title:</strong>

@@ -1,0 +1,39 @@
+<h1>Welcome Admin</h1>
+It's <%= Time.now %>
+
+<h1>Listing Orders</h1>
+<form id = "form1">
+  <p> Order From: </p>
+  <%= select_date Date.today, prefix: :order_from %> <br>
+  <p> Order To: </p>
+  <%= select_date Date.today, prefix: :order_to %>
+
+  <button type="submit" form="form1" value="Submit">Submit</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Email</th>
+      <th>Pay type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% if params[:order_from] && params[:order_to] %>
+    <% @orders = @orders.where(created_at: Date.new(params[:order_from][:year].to_i,params[:order_from][:month].to_i,params[:order_from][:day].to_i).. Date.new(params[:order_to][:year].to_i,params[:order_to][:month].to_i,params[:order_to][:day].to_i)) %>
+    <% end %>
+
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= order.address %></td>
+        <td><%= order.email %></td>
+        <td><%= order.pay_type %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

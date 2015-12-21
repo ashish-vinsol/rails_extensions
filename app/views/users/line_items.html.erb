@@ -1,0 +1,31 @@
+<h1>Listing Line Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>LineItem id</th>
+      <th>product_id</th>
+      <th> cart_id</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @line_items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.product_id %></td>
+        <td><%= item.cart_id %></td>
+        <td><%= item.created_at %></td>
+        <td><%= item.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% for index in 1..@page_size do %>
+     <%= link_to "Page #{index}", "/users/line_items/#{ index }" %>
+    <% end %>
